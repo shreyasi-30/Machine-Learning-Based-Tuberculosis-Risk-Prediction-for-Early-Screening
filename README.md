@@ -1,187 +1,297 @@
-# Machine-Learning-Based-Tuberculosis-Risk-Prediction-for-Early-Screening
+# TB Risk Prediction Using Machine Learning
 
-📌 Project Overview
-Tuberculosis (TB) is a major infectious disease where early identification and screening can support timely clinical assessment. This project develops a machine learning-based predictive model to identify whether a patient is likely to be classified as TB Suspected or Not Suspected based on clinical, demographic, health, and exposure-related attributes.
-The project follows an end-to-end Predictive Modelling / KDD (Knowledge Discovery in Databases) workflow, including data understanding, preprocessing, exploratory analysis, model development, evaluation, and explainability.
-Note: This project is developed for academic and educational purposes. The model is not a medical diagnostic system and should not be used to diagnose or treat tuberculosis.
+## 📌 Project Overview
 
-🎯 Problem Statement
-To develop a machine learning model that predicts TB risk using clinical and demographic data, supporting early screening and further clinical assessment.
-Objective
-To develop a machine learning model that predicts TB risk using clinical and demographic data, supporting early screening and further clinical assessment.
+Tuberculosis (TB) is a major public health concern, and early identification of individuals at risk can support timely screening and intervention.
 
-📊 Dataset
-The dataset used in this project is a TB-related dataset obtained from the supplementary data associated with a PeerJ Computer Science research study.
-Dataset Details
-- Total usable records: 760
-- Target variable: Prediction
-- Target classes:
-  - TB Suspected — 392 records
-  - Not Suspected — 368 records
-Feature Categories
-Respiratory Indicators
-- Cough
-- Cough Duration
-- Cough Type
-- Mucus
-- Chest Pain
-- Breathe State
-Clinical Indicators
-- Body Temperature
-- Chills
-- Pulmonary Effusion
-- ESR Value
-Health and Exposure Factors
-- Diet
-- Physique
-- Energy Adequacy
-- Smoking
-- Crowding
-- Exposed
-Patient ID was excluded from model training because it is an identifier rather than a predictive feature. Empty/irrelevant columns were also removed during data cleaning.
-🔄 Predictive Modelling / KDD Workflow
-The project follows these major stages:
-Problem Identification
-        ↓
-Data Collection
-        ↓
+This project develops a **machine learning-based TB risk prediction system** using two different healthcare datasets. The datasets are analyzed **independently** to compare the performance of multiple machine learning algorithms.
+
+The project focuses particularly on **Recall**, because in a TB screening scenario, identifying suspected TB cases is important and missing a potential case can be undesirable.
+
+The project also includes:
+- Model comparison
+- Best-model selection
+- Hyperparameter tuning
+- Decision-threshold analysis
+- Model evaluation using multiple performance metrics
+- SHAP-based explainability
+
+---
+
+# 🎯 Objectives
+
+The main objectives of this project are:
+
+1. To understand and preprocess healthcare datasets related to TB risk.
+2. To compare multiple machine learning classification algorithms.
+3. To select the best-performing model based on **Recall**.
+4. To improve the selected model through tuning and threshold analysis.
+5. To evaluate model performance using Accuracy, Precision, Recall, F1-Score and ROC-AUC.
+6. To provide model interpretability using SHAP.
+7. To compare the predictive performance obtained from the two datasets.
+
+---
+
+# 📊 Datasets
+
+Two datasets are used in this project.
+
+## Dataset 1
+
+Dataset 1 contains healthcare-related features used for TB risk classification.
+
+The target variable represents whether an individual belongs to the TB-positive or non-TB class.
+
+The dataset is processed independently and used to train and evaluate multiple machine learning models.
+
+### Final Best Model
+
+**Random Forest**
+
+### Final Performance
+
+| Metric | Score |
+|---|---:|
+| Accuracy | 94.74% |
+| Precision | 92.74% |
+| Recall | 97.46% |
+| F1-Score | 95.04% |
+| ROC-AUC | 98.65% |
+
+---
+
+## Dataset 2
+
+Dataset 2 contains **1,794 records and 11 columns**.
+
+Important features include:
+
+- `age_group`
+- `hiv_pos`
+- `diabetes`
+- `ever_smoke`
+- `past_tb`
+- `male`
+- `hs_less`
+- `two_weeks_symp`
+- `num_symptoms`
+- `country`
+
+The target variable is:
+
+- `tb`
+
+Dataset 2 contains a categorical age-group feature, seven binary indicators, a symptom-count feature and country information.
+
+### Target Distribution
+
+| TB Class | Records | Percentage |
+|---|---:|---:|
+| Not Suspected | 986 | 54.96% |
+| TB Suspected | 808 | 45.04% |
+
+---
+
+# 🔄 Project Workflow
+
+The overall workflow is:
+
+```text
+Dataset
+   ↓
 Data Understanding
-        ↓
-Data Cleaning
-        ↓
-Feature Transformation
-        ↓
-Exploratory Data Analysis
-        ↓
+   ↓
+Feature & Target Separation
+   ↓
+Data Preprocessing
+   ↓
+Categorical Feature Encoding
+   ↓
 Train-Test Split
-        ↓
-Model Development
-        ↓
+   ↓
+Machine Learning Model Training
+   ↓
 Model Comparison
-        ↓
-Model Evaluation
-        ↓
+   ↓
+Best Model Selection
+   ↓
+Hyperparameter Tuning
+   ↓
+Threshold Analysis
+   ↓
+Final Model Evaluation
+   ↓
 Explainability using SHAP
-        ↓
-TB Risk Prediction
+   ↓
+Dataset Comparison
+   ↓
+Conclusion
+
+
 
 🧹 Data Preprocessing
-The following preprocessing steps were performed:
-1. Loaded the dataset using Pandas.
-2. Inspected the dataset structure and feature values.
-3. Removed irrelevant empty columns.
-4. Removed Patient ID from the modelling features.
-5. Converted Cough Duration into a numerical format.
-6. Encoded the target variable:
-   - Not Suspected → 0
-   - TB Suspected → 1
-7. Applied One-Hot Encoding to categorical features.
-8. Used scaling for models where required.
-9. Divided the data into training and testing sets using a 70:30 stratified split.
-10. Used random_state=42 for reproducibility.
-🔍 Exploratory Data Analysis
-Exploratory Data Analysis was performed to understand:
-- Dataset structure
-- Target class distribution
-- Feature distributions
-- Missing values
-- Relationships between variables
-- Feature importance
-Visualizations were generated using Python-based data visualization libraries.
+The datasets were processed separately.
+The preprocessing workflow includes:
+- Checking dataset structure
+- Checking missing values
+- Understanding feature types
+- Separating features and target
+- Encoding categorical variables
+- Splitting the data into training and testing sets
+For Dataset 2, categorical features such as age_group and country were encoded before model training.
 🤖 Machine Learning Models
-Multiple classification algorithms were developed and compared:
-1. Logistic Regression
-2. Decision Tree
-3. Random Forest
-4. AdaBoost
-5. Gaussian Naive Bayes
-6. Multi-Layer Perceptron (MLP)
-After comparison, Random Forest was selected as the final model based on its overall predictive performance.
-🏆 Final Model
-Random Forest Classifier
-The final Random Forest model was configured with:
-- n_estimators = 300
-- class_weight = "balanced"
-The model was selected because it provided strong performance on the structured tabular dataset and supported feature-importance and SHAP-based interpretation.
-📈 Model Evaluation
-The final Random Forest model achieved the following results on the test dataset:
+Multiple classification algorithms were evaluated.
+The models include:
+- Logistic Regression
+- Decision Tree
+- Random Forest
+- XGBoost
+- AdaBoost
+- Gaussian Naive Bayes
+- Neural Network / MLP
+The models were compared using:
+- Accuracy
+- Precision
+- Recall
+- F1-Score
+- ROC-AUC
+⭐ Model Selection Strategy
+Since this is a TB screening-oriented prediction problem, Recall was given particular importance.
+Recall measures the proportion of actual TB-suspected cases that are correctly identified by the model.
+Therefore, the model with the strongest Recall was selected as the preferred model during baseline comparison.
+Selected Models
+Dataset	Selected Model
+Dataset 1	Random Forest
+Dataset 2	XGBoost
+
+
+📈 Dataset 1 — Model Comparison
+The machine learning models were compared using multiple evaluation metrics.
+Random Forest achieved the strongest overall performance and was selected as the final Dataset 1 model.
+Final Dataset 1 Model
+Random Forest
+Performance
+- Accuracy: 94.74%
+- Precision: 92.74%
+- Recall: 97.46%
+- F1-Score: 95.04%
+- ROC-AUC: 98.65%
+The high Recall indicates that the model identified a large proportion of the TB-suspected cases in the test set.
+📈 Dataset 2 — Model Comparison
+Seven machine learning models were evaluated on Dataset 2.
+The baseline comparison identified XGBoost as the preferred model based on Recall.
+Baseline XGBoost Performance
+- Accuracy: 73.54%
+- Precision: 71.61%
+- Recall: 68.52%
+- F1-Score: 70.03%
+- ROC-AUC: 80.16%
+Although AdaBoost achieved higher Accuracy, Precision and F1-Score, XGBoost was selected because Recall was the primary selection criterion.
+⚙️ Dataset 2 — XGBoost Improvement
+After selecting XGBoost, further improvement was explored using:
+1. Hyperparameter tuning
+2. Decision-threshold analysis
+The purpose of threshold analysis was to study how changing the classification threshold affects the balance between Precision and Recall.
+🎚️ Threshold Analysis
+Different decision thresholds were evaluated.
+Threshold	Accuracy	Precision	Recall	F1-Score
+0.50	76.32%	75.50%	70.37%	72.84%
+0.45	74.37%	71.88%	70.99%	71.43%
+0.40	72.42%	67.80%	74.07%	70.80%
+0.35	70.19%	63.82%	78.40%	70.36%
+0.30	68.80%	61.57%	82.10%	70.37%
+
+
+A threshold of 0.40 was retained as the final threshold because it provided an improved Recall while maintaining a practical Precision-Recall trade-off.
+🏆 Final Dataset 2 Model
+Tuned XGBoost
+Final threshold:
+0.40
+Final Performance
 Metric	Score
-Accuracy	94.74%
-Precision	92.74%
-Recall	97.46%
-F1-Score	95.04%
-ROC-AUC	98.65%
+Accuracy	72.42%
+Precision	67.80%
+Recall	74.07%
+F1-Score	70.80%
+ROC-AUC	80.57%
 
 
-Confusion Matrix
-	Predicted Not Suspected	Predicted TB Suspected
-Actual Not Suspected	101	9
-Actual TB Suspected	3	115
+Note: The baseline XGBoost ROC-AUC was 80.16%, while the final tuned XGBoost ROC-AUC is 80.57%.
+
+🔍 Model Explainability — SHAP
+SHAP (SHapley Additive exPlanations) was incorporated to improve the interpretability of machine learning predictions.
+SHAP helps explain how individual features contribute to a particular prediction.
+The project uses SHAP for patient-level prediction explanation in Dataset 1.
+Conceptually:
+Patient Features
+       ↓
+Machine Learning Model
+       ↓
+TB Risk Prediction
+       ↓
+SHAP Explanation
+       ↓
+Feature Contribution
+
+SHAP is used as an explainability component and is not treated as an additional performance metric.
+📊 Dataset 1 vs Dataset 2
+Metric	Dataset 1	Dataset 2
+Final Model	Random Forest	Tuned XGBoost
+Accuracy	94.74%	72.42%
+Precision	92.74%	67.80%
+Recall	97.46%	74.07%
+F1-Score	95.04%	70.80%
+ROC-AUC	98.65%	80.57%
 
 
-The model correctly identified 115 TB Suspected cases and 101 Not Suspected cases in the test set.
-🧠 Explainable AI using SHAP
-SHAP (SHapley Additive exPlanations) was used to provide an interpretation of the Random Forest model's predictions.
-SHAP helps identify which input features contributed to a particular model prediction.
-Examples of features appearing among the important SHAP contributions include:
-- Cough Type
-- Cough Duration
-- Mucus
-- ESR Value
-- Chest Pain
-- Chills
-- Cough
-SHAP explanations describe the model's behaviour and feature contributions. They should not be interpreted as proof of medical causation.
-
-🖥️ Interactive Prediction Dashboard
-A Gradio-based interactive dashboard was developed as part of the project.
-The dashboard allows users to:
-- Enter patient-related clinical and demographic information
-- Generate a TB risk prediction
-- View the model-estimated probability
-- View the risk category
-- Examine SHAP-based explanations
-- View clinical action guidance
-- Reset or load a demonstration case
-Example Demonstration
-For the high-risk demonstration input, the model produced:
-Prediction: TB Suspected
-Model-estimated probability: 99.83%
-Risk category: HIGH RISK
-The 99.83% value is a model-estimated probability for the specific demonstration input and does not represent a clinical diagnosis or a patient's actual probability of having TB.
+Key Observation
+Dataset 1 achieved stronger predictive performance across the evaluated metrics.
+Dataset 2 showed moderate performance, but its Recall was improved through XGBoost tuning and decision-threshold analysis.
+The two datasets were evaluated independently and were not merged, so their performance should be interpreted within their respective dataset characteristics.
+📌 Key Findings
+Dataset 1
+- Random Forest was selected as the final model.
+- It achieved a Recall of 97.46%.
+- ROC-AUC reached 98.65%.
+Dataset 2
+- XGBoost was selected based on Recall during baseline comparison.
+- Hyperparameter tuning and threshold analysis were performed.
+- A threshold of 0.40 was selected.
+- Final Recall increased to 74.07%.
+- Final ROC-AUC was 80.57%.
+⚠️ Limitations
+The project has the following limitations:
+- A single train-test split was used.
+- No external validation dataset was used.
+- Model and threshold selection were performed within the available test-set workflow.
+- Dataset 2 contains repeated/duplicate profiles that may affect evaluation.
+- The two datasets have different characteristics and feature structures.
+- Dataset 1 and Dataset 2 were not combined.
+- Dataset 1 was not subjected to the same hyperparameter tuning procedure used for Dataset 2.
+🚀 Future Scope
+Future improvements could include:
+- Using cross-validation for more robust model evaluation.
+- Using a separate validation set for model and threshold selection.
+- Testing the models on external TB datasets.
+- Collecting larger and more diverse healthcare datasets.
+- Performing additional feature engineering.
+- Extending SHAP analysis to global feature importance.
+- Applying explainability techniques to both datasets.
+- Developing a user-friendly screening-support application.
+- Evaluating the system prospectively in a real-world healthcare setting.
 🛠️ Technologies Used
+Programming
 - Python
-- Jupyter Notebook
+Data Processing
 - Pandas
 - NumPy
+Machine Learning
 - Scikit-learn
+- XGBoost
+Visualization
 - Matplotlib
 - Seaborn
+Explainable AI
 - SHAP
-- Gradio
-
-📌 Key Findings
-- The project successfully implemented an end-to-end predictive modelling workflow.
-- Six machine learning algorithms were developed and compared.
-- Random Forest was selected as the final model.
-- The final model achieved 94.74% accuracy and 97.46% recall on the test set.
-- SHAP was used to improve model interpretability.
-- A Gradio dashboard was developed to demonstrate interactive TB risk prediction.
-- The system is intended to support early screening, not replace clinical diagnosis.
-  
-🔮 Future Scope
-Future improvements could include:
-- Training on larger and more diverse datasets.
-- External validation using independent datasets.
-- Incorporating additional clinically relevant variables.
-- Monitoring model performance over time.
-- Improving explainability and user interaction.
-- Clinical validation before considering any real-world deployment.
-  
-👩‍💻 Author
-Shreyasi Gidmare
-B.Tech Computer Science & Engineering
-Honours – Artificial Intelligence & Machine Learning
-Symbiosis Institute of Technology, Nagpur
-📚 Reference
-The dataset and research context are based on the PeerJ Computer Science study and its supplementary materials used for this academic project.
+Development Environment
+- Jupyter Notebook / Google Colab
